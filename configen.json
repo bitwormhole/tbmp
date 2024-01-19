@@ -1,0 +1,57 @@
+{
+    "configen": {
+        "version": "4",
+        "sources": [
+            {
+                "id": "client",
+                "path": "src/client/golang",
+                "r": true
+            },
+            {
+                "id": "server",
+                "path": "src/server/golang",
+                "r": true
+            },
+            {
+                "id": "main",
+                "path": "src/main/golang",
+                "r": true
+            },
+            {
+                "id": "test",
+                "path": "src/test/golang",
+                "r": true
+            }
+        ],
+        "destinations": [
+            {
+                "id": "main",
+                "path": "gen/main4tbmp",
+                "sources": [
+                    "main"
+                ]
+            },
+            {
+                "id": "client",
+                "path": "gen/client4tbmp",
+                "sources": [
+                    "client"
+                ]
+            },
+            {
+                "id": "server",
+                "path": "gen/server4tbmp",
+                "sources": [
+                    "server"
+                ]
+            },
+            {
+                "id": "test",
+                "path": "gen/test4tbmp",
+                "sources": [
+                    "test"
+                ]
+            }
+        ]
+    }
+}

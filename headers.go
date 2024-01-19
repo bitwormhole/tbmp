@@ -4,8 +4,10 @@ import "strings"
 
 // 定义一些常用的头部字段名称
 const (
-	HeaderMethod      = "Method"
-	HeaderPath        = "Path"
+	// HeaderMethod      = "Method"
+	// HeaderPath        = "Path"
+
+	HeaderService     = "Service"
 	HeaderClient      = "Client"
 	HeaderServer      = "Server"
 	HeaderProtocol    = "Protocol"

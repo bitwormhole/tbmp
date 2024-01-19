@@ -5,8 +5,8 @@ import (
 	"github.com/starter-go/application"
 )
 
-// EngineControl 这个组件用于控制默认的 TBMP 引擎
-type EngineControl struct {
+// EngineBootstrap 这个组件用于控制默认的 TBMP 引擎
+type EngineBootstrap struct {
 
 	//starter:component
 
@@ -17,12 +17,12 @@ type EngineControl struct {
 	engine *engine.Engine
 }
 
-func (inst *EngineControl) _impl() application.Lifecycle {
+func (inst *EngineBootstrap) _impl() application.Lifecycle {
 	return inst
 }
 
 // Life ...
-func (inst *EngineControl) Life() *application.Life {
+func (inst *EngineBootstrap) Life() *application.Life {
 	return &application.Life{
 		OnCreate: inst.onCreate,
 		OnStart:  inst.onStart,
@@ -30,7 +30,7 @@ func (inst *EngineControl) Life() *application.Life {
 	}
 }
 
-func (inst *EngineControl) onCreate() error {
+func (inst *EngineBootstrap) onCreate() error {
 	eng, err := inst.createEngine()
 	if err != nil {
 		return err
@@ -39,15 +39,15 @@ func (inst *EngineControl) onCreate() error {
 	return nil
 }
 
-func (inst *EngineControl) onStart() error {
+func (inst *EngineBootstrap) onStart() error {
 	return nil
 }
 
-func (inst *EngineControl) onStop() error {
+func (inst *EngineBootstrap) onStop() error {
 	return nil
 }
 
-func (inst *EngineControl) initElements(eng *engine.Engine) error {
+func (inst *EngineBootstrap) initElements(eng *engine.Engine) error {
 	list := eng.Elements
 	for _, item := range list {
 		if item == nil {
@@ -64,7 +64,7 @@ func (inst *EngineControl) initElements(eng *engine.Engine) error {
 	return nil
 }
 
-func (inst *EngineControl) createEngine() (*engine.Engine, error) {
+func (inst *EngineBootstrap) createEngine() (*engine.Engine, error) {
 
 	eng := new(engine.Engine)
 
@@ -83,7 +83,7 @@ func (inst *EngineControl) createEngine() (*engine.Engine, error) {
 	return eng, nil
 }
 
-func (inst *EngineControl) loadElements() []*engine.ElementRegistration {
+func (inst *EngineBootstrap) loadElements() []*engine.ElementRegistration {
 	dst := make([]*engine.ElementRegistration, 0)
 	src := inst.ElementRegs
 	for _, r1 := range src {
@@ -93,7 +93,7 @@ func (inst *EngineControl) loadElements() []*engine.ElementRegistration {
 	return dst
 }
 
-func (inst *EngineControl) loadFilters() []*engine.FilterRegistration {
+func (inst *EngineBootstrap) loadFilters() []*engine.FilterRegistration {
 	dst := make([]*engine.FilterRegistration, 0)
 	src := inst.FilterRegs
 	for _, r1 := range src {
@@ -103,7 +103,7 @@ func (inst *EngineControl) loadFilters() []*engine.FilterRegistration {
 	return dst
 }
 
-func (inst *EngineControl) loadHandlers() []*engine.HandlerRegistration {
+func (inst *EngineBootstrap) loadHandlers() []*engine.HandlerRegistration {
 	dst := make([]*engine.HandlerRegistration, 0)
 	src := inst.HandlerRegs
 	for _, r1 := range src {

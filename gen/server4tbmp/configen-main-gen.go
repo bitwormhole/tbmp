@@ -30,10 +30,14 @@ func (inst *autoRegistrar) register(factory comFactory) error {
 func (inst*autoRegistrar) addAll() error {
 
     
-    inst.register(&p2026f032f9_code_EngineControl{})
+    inst.register(&p2026f032f9_code_EngineBootstrap{})
     inst.register(&p2026f032f9_code_Example{})
-    inst.register(&p2026f032f9_code_TCPConnector{})
-    inst.register(&p2026f032f9_code_TLSConnector{})
+    inst.register(&p4c37db26f7_elements_TCPConnector{})
+    inst.register(&p4c37db26f7_elements_TLSConnector{})
+    inst.register(&p6e65738189_filters_FindHandlerFilter{})
+    inst.register(&p6e65738189_filters_InvokeHandlerFilter{})
+    inst.register(&p6e65738189_filters_LoadUpstreamHeadFilter{})
+    inst.register(&pad76024e6d_handlers_Example{})
 
 
     return nil

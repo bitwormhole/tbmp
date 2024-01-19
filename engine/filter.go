@@ -2,6 +2,19 @@ package engine
 
 import "github.com/starter-go/base/util"
 
+// 定义各个过滤器的处理顺序
+const (
+	FilterOrder0 = iota
+
+	FilterOrderLoadUpstreamHead
+	FilterOrderFindHandler
+	FilterOrderInvokeHandler
+
+	FilterOrder99
+)
+
+////////////////////////////////////////////////////////////////////////////////
+
 // Filter ...
 type Filter interface {
 	DoFilter(c *Context, next FilterChain) error

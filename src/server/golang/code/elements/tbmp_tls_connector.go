@@ -1,4 +1,4 @@
-package code
+package elements
 
 import (
 	"github.com/bitwormhole/tbmp/engine"

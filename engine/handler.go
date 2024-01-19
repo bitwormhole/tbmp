@@ -1,12 +1,11 @@
 package engine
 
 // Handler ...
-type Handler func(c *Context)
+type Handler func(c *Context) error
 
 // HandlerRegistration ...
 type HandlerRegistration struct {
-	Method  string
-	Path    string
+	Service string // service name of handler
 	Enabled bool
 	Handler Handler
 }

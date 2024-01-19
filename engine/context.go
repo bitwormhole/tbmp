@@ -7,4 +7,5 @@ type Context struct {
 	Engine     *Engine
 	Connection tbmp.ServerSideConnection
 	Handler    Handler
+	Service    string // service name of connection
 }

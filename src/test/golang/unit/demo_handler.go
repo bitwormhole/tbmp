@@ -33,5 +33,5 @@ func (inst *DemoHandler) Handlers() []*engine.HandlerRegistration {
 
 // Units ...
 func (inst *DemoHandler) handle(ctx *engine.Context) error {
-	return nil
+	return ctx.Send(http.StatusOK, "application/x-demo-response-data")
 }

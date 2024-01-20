@@ -22,6 +22,7 @@ const (
 	// server.tx
 
 	HeaderServer = "Server"
+	HeaderStatus = "Status"
 )
 
 // Headers ...

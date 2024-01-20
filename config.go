@@ -11,13 +11,14 @@ const (
 
 // Configuration ...
 type Configuration struct {
+	Method   string
 	Protocol string
 	Host     string
 	Port     int
 	Username string
 	Password string
 	Secure   bool
-	// Headers  Headers
+	Headers  Headers
 }
 
 func (cfg *Configuration) getAddress() string {

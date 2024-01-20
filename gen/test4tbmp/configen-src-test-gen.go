@@ -5,6 +5,44 @@ import (
      "github.com/starter-go/application"
 )
 
+// type p8505ed25c.DemoHandler in package:github.com/bitwormhole/tbmp/src/test/golang/unit
+//
+// id:com-8505ed25cac7a1c5-unit-DemoHandler
+// class:class-38ad25bcacda9374230da8811af7ccbc-HandlerRegistry
+// alias:
+// scope:singleton
+//
+type p8505ed25ca_unit_DemoHandler struct {
+}
+
+func (inst* p8505ed25ca_unit_DemoHandler) register(cr application.ComponentRegistry) error {
+	r := cr.NewRegistration()
+	r.ID = "com-8505ed25cac7a1c5-unit-DemoHandler"
+	r.Classes = "class-38ad25bcacda9374230da8811af7ccbc-HandlerRegistry"
+	r.Aliases = ""
+	r.Scope = "singleton"
+	r.NewFunc = inst.new
+	r.InjectFunc = inst.inject
+	return r.Commit()
+}
+
+func (inst* p8505ed25ca_unit_DemoHandler) new() any {
+    return &p8505ed25c.DemoHandler{}
+}
+
+func (inst* p8505ed25ca_unit_DemoHandler) inject(injext application.InjectionExt, instance any) error {
+	ie := injext
+	com := instance.(*p8505ed25c.DemoHandler)
+	nop(ie, com)
+
+	
+
+
+    return nil
+}
+
+
+
 // type p8505ed25c.DemoUnit in package:github.com/bitwormhole/tbmp/src/test/golang/unit
 //
 // id:com-8505ed25cac7a1c5-unit-DemoUnit

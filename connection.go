@@ -7,20 +7,6 @@ type Connection interface {
 	io.Closer
 }
 
-// RxStream ...
-type RxStream interface {
-	io.Reader
-
-	Headers() *Headers
-}
-
-// TxStream ...
-type TxStream interface {
-	io.Writer
-
-	Headers() *Headers
-}
-
 // ClientSideConnection ...
 type ClientSideConnection interface {
 	Connection

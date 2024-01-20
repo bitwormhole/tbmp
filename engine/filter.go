@@ -6,6 +6,7 @@ import "github.com/starter-go/base/util"
 const (
 	FilterOrder0 = iota
 
+	FilterOrderCloseConnection
 	FilterOrderLoadUpstreamHead
 	FilterOrderFindHandler
 	FilterOrderInvokeHandler
@@ -98,7 +99,7 @@ func (inst *FilterChainBuilder) prepareItems() []*FilterRegistration {
 		OnLess: func(i1, i2 int) bool {
 			o1 := dst[i1].Order
 			o2 := dst[i2].Order
-			return o1 < o2
+			return o1 > o2
 		},
 	}
 	s.Sort()

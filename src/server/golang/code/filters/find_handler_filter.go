@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/bitwormhole/tbmp"
 	"github.com/bitwormhole/tbmp/engine"
 	"github.com/starter-go/vlog"
 )
@@ -15,7 +16,7 @@ type FindHandlerFilter struct {
 	_as func(engine.FilterRegistry, engine.ElementRegistry) //starter:as(".",".")
 
 	mutex    sync.Mutex
-	handlers map[string]*engine.HandlerRegistration // map[service-name] handler-reg
+	handlers map[tbmp.HandlerSelector]*engine.HandlerRegistration
 }
 
 func (inst *FindHandlerFilter) _impl() (engine.FilterRegistry, engine.ElementRegistry, engine.Filter) {
@@ -43,15 +44,15 @@ func (inst *FindHandlerFilter) Filters() []*engine.FilterRegistration {
 
 func (inst *FindHandlerFilter) init(eng *engine.Engine) error {
 	src := eng.Handlers
-	dst := make(map[string]*engine.HandlerRegistration)
+	dst := make(map[tbmp.HandlerSelector]*engine.HandlerRegistration)
 	for _, item := range src {
 		if inst.isHandlerReady(item) {
-			name := item.Service
-			old := dst[name]
+			sel := item.GetSelector()
+			old := dst[sel]
 			if old != nil {
-				vlog.Warn("tbmp: handlers with name [%s] are duplicate", name)
+				vlog.Warn("tbmp: handlers with selector [%s] are duplicate", sel)
 			}
-			dst[name] = item
+			dst[sel] = item
 		}
 	}
 	inst.handlers = dst
@@ -68,16 +69,16 @@ func (inst *FindHandlerFilter) isHandlerReady(hr *engine.HandlerRegistration) bo
 	if hr.Handler == nil {
 		return false
 	}
-	if hr.Service == "" {
-		return false
-	}
+	// if hr.Service == "" {
+	// 	return false
+	// }
 	return true
 }
 
 // DoFilter ...
 func (inst *FindHandlerFilter) DoFilter(c *engine.Context, next engine.FilterChain) error {
 
-	h, err := inst.findHandler(c.Service)
+	h, err := inst.findHandler(c)
 	if err != nil {
 		return err
 	}
@@ -86,28 +87,29 @@ func (inst *FindHandlerFilter) DoFilter(c *engine.Context, next engine.FilterCha
 	return next.DoFilter(c)
 }
 
-func (inst *FindHandlerFilter) findHandler(service string) (engine.Handler, error) {
+func (inst *FindHandlerFilter) findHandler(c *engine.Context) (engine.Handler, error) {
 
 	inst.mutex.Lock()
 	defer func() {
 		inst.mutex.Unlock()
 	}()
 
-	h1 := inst.handlers[service]
+	sel := c.Selector
+	h1 := inst.handlers[sel]
 	if h1 == nil {
-		err := inst.makeNoHandlerError(service)
+		err := inst.makeNoHandlerError(sel)
 		return nil, err
 	}
 
 	h2 := h1.Handler
 	if h2 == nil {
-		err := inst.makeNoHandlerError(service)
+		err := inst.makeNoHandlerError(sel)
 		return nil, err
 	}
 
 	return h2, nil
 }
 
-func (inst *FindHandlerFilter) makeNoHandlerError(service string) error {
-	return fmt.Errorf("no service handler for name [%s]", service)
+func (inst *FindHandlerFilter) makeNoHandlerError(sel tbmp.HandlerSelector) error {
+	return fmt.Errorf("no handler for service [%s]", sel)
 }

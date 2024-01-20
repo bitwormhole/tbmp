@@ -118,11 +118,11 @@ func (inst *myPlainTester) startServer() error {
 func (inst *myPlainTester) openClient() error {
 	inst.log("open client")
 
-	cfg := inst.config()
-	cfg.Host = "localhost"
+	url := "tbmp://localhost/a/b/c"
+	// cfg := inst.config()
 
 	client := NewClient()
-	conn, err := client.Connect(cfg)
+	conn, err := client.Connect(url)
 	if err != nil {
 		return err
 	}

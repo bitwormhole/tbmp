@@ -232,6 +232,44 @@ func (inst*p4c37db26f7_elements_TLSConnector) getEnabled(ie application.Injectio
 
 
 
+// type p6e6573818.CloseConnectionFilter in package:github.com/bitwormhole/tbmp/src/server/golang/code/filters
+//
+// id:com-6e657381895e3878-filters-CloseConnectionFilter
+// class:class-38ad25bcacda9374230da8811af7ccbc-FilterRegistry
+// alias:
+// scope:singleton
+//
+type p6e65738189_filters_CloseConnectionFilter struct {
+}
+
+func (inst* p6e65738189_filters_CloseConnectionFilter) register(cr application.ComponentRegistry) error {
+	r := cr.NewRegistration()
+	r.ID = "com-6e657381895e3878-filters-CloseConnectionFilter"
+	r.Classes = "class-38ad25bcacda9374230da8811af7ccbc-FilterRegistry"
+	r.Aliases = ""
+	r.Scope = "singleton"
+	r.NewFunc = inst.new
+	r.InjectFunc = inst.inject
+	return r.Commit()
+}
+
+func (inst* p6e65738189_filters_CloseConnectionFilter) new() any {
+    return &p6e6573818.CloseConnectionFilter{}
+}
+
+func (inst* p6e65738189_filters_CloseConnectionFilter) inject(injext application.InjectionExt, instance any) error {
+	ie := injext
+	com := instance.(*p6e6573818.CloseConnectionFilter)
+	nop(ie, com)
+
+	
+
+
+    return nil
+}
+
+
+
 // type p6e6573818.FindHandlerFilter in package:github.com/bitwormhole/tbmp/src/server/golang/code/filters
 //
 // id:com-6e657381895e3878-filters-FindHandlerFilter

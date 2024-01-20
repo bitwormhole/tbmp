@@ -34,10 +34,14 @@ func (inst *Unit1) Units(list []*units.Registration) []*units.Registration {
 // Units ...
 func (inst *Unit1) test1() error {
 
-	cfg := inst.getConfig()
-	h := inst.getHeaders()
+	url := "tbmp://user1@localhost:5570/demo/1?a=1&b=2#f999"
 
-	conn, err := inst.Client.Connect(cfg, h)
+	// cfg := inst.getConfig()
+	// h := inst.getHeaders()
+
+	op1 := tbmp.OptionHeader(tbmp.HeaderContentType, "application/x-demo-format")
+
+	conn, err := inst.Client.Connect(url, op1)
 	if err != nil {
 		return err
 	}

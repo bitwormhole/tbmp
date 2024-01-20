@@ -2,7 +2,7 @@ package tbmp
 
 // Connector 表示一个 TBMP 连接器
 type Connector interface {
-	Connect(cfg *Configuration, hlist ...*Headers) (ClientSideConnection, error)
+	Connect(url string, options ...Option) (ClientSideConnection, error)
 }
 
 // Client ...

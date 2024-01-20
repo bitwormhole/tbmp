@@ -34,6 +34,7 @@ func (inst*autoRegistrar) addAll() error {
     inst.register(&p2026f032f9_code_Example{})
     inst.register(&p4c37db26f7_elements_TCPConnector{})
     inst.register(&p4c37db26f7_elements_TLSConnector{})
+    inst.register(&p6e65738189_filters_CloseConnectionFilter{})
     inst.register(&p6e65738189_filters_FindHandlerFilter{})
     inst.register(&p6e65738189_filters_InvokeHandlerFilter{})
     inst.register(&p6e65738189_filters_LoadUpstreamHeadFilter{})

@@ -35,6 +35,6 @@ func (inst *ClientFacade) SetName(name string) {
 }
 
 // Connect ...
-func (inst *ClientFacade) Connect(cfg *tbmp.Configuration, hlist ...*tbmp.Headers) (tbmp.ClientSideConnection, error) {
-	return inst.getInner().Connect(cfg, hlist...)
+func (inst *ClientFacade) Connect(url string, options ...tbmp.Option) (tbmp.ClientSideConnection, error) {
+	return inst.getInner().Connect(url, options...)
 }

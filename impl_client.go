@@ -3,6 +3,9 @@ package tbmp
 import (
 	"crypto/tls"
 	"net"
+	"net/http"
+	"net/url"
+	"strconv"
 )
 
 type clientImpl struct {
@@ -21,33 +24,71 @@ func (inst *clientImpl) SetName(name string) {
 	inst.name = name
 }
 
-func (inst *clientImpl) prepareHeaders(cfg *Configuration, hlist ...*Headers) []*Headers {
+func (inst *clientImpl) prepareConfig(aURL string, options []Option) (*Configuration, error) {
+
+	u, err := url.Parse(aURL)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := new(Configuration)
+	for _, op := range options {
+		op(cfg)
+	}
+
+	host := u.Hostname()
+	portStr := u.Port()
+	port, _ := strconv.Atoi(portStr)
+
+	if cfg.Host == "" {
+		cfg.Host = host
+	}
+
+	if cfg.Port < 1 {
+		cfg.Port = port
+	}
+
+	if cfg.Protocol == "" {
+		cfg.Protocol = NameProtocol
+	}
+
+	return cfg, nil
+}
+
+func (inst *clientImpl) prepareHeaders(url string, cfg *Configuration) {
 
 	name := inst.name
+	method := cfg.Method
 	protocol := cfg.Protocol
 
 	if name == "" {
 		name = NameClient
 	}
 
+	if method == "" {
+		method = http.MethodGet
+	}
+
 	if protocol == "" {
 		protocol = NameProtocol
 	}
 
-	h := &Headers{}
+	h := &cfg.Headers
+	h.Set(HeaderMethod, method)
+	h.Set(HeaderURL, url)
 	h.Set(HeaderClient, name)
 	h.Set(HeaderProtocol, protocol)
-
-	return append(hlist, h)
 }
 
-func (inst *clientImpl) Connect(cfg *Configuration, hlist ...*Headers) (ClientSideConnection, error) {
+func (inst *clientImpl) Connect(url string, options ...Option) (ClientSideConnection, error) {
 
-	if cfg == nil {
-		cfg = new(Configuration)
+	cfg, err := inst.prepareConfig(url, options)
+	if err != nil {
+		return nil, err
 	}
 
-	hlist = inst.prepareHeaders(cfg, hlist...)
+	inst.prepareHeaders(url, cfg)
+	hlist := &cfg.Headers
 
 	conn1, err := inst.openConn(cfg)
 	if err != nil {
@@ -74,7 +115,7 @@ func (inst *clientImpl) Connect(cfg *Configuration, hlist ...*Headers) (ClientSi
 		return nil, err
 	}
 
-	_, err = conn2.Upstream(hlist...)
+	_, err = conn2.Upstream(hlist)
 	if err != nil {
 		return nil, err
 	}

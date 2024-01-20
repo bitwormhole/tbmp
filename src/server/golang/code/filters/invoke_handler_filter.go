@@ -31,9 +31,10 @@ func (inst *InvokeHandlerFilter) Filters() []*engine.FilterRegistration {
 // DoFilter ...
 func (inst *InvokeHandlerFilter) DoFilter(ctx *engine.Context, next engine.FilterChain) error {
 
+	sel := ctx.Selector
 	h := ctx.Handler
 	if h == nil {
-		return fmt.Errorf("tbmp: no handler for service [%s]", ctx.Service)
+		return fmt.Errorf("tbmp: no handler for selector [%s]", sel)
 	}
 
 	err := h(ctx)
